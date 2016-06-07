@@ -36,4 +36,13 @@ There are several things left to do before I'll consider this complete.
 - column dividers are wonky
 - make it responsive - look good on both bigscreen tv and phone
 - printable - add css for being able to print the list nicely
+- Change SVG usage to sprites and use xlink:href so they can be styled with CSS.
 
+- Bigger Picture
+ - Reconsider requirement to run without a webserver.  Would be easier to maintain if it was more modular.
+ - Consider porting it from Angular to something else.
+ - Clean up the project structure.  It's a mess.  
+  - Use a dependency manager (bower or something).
+  - Separate my code from 3rd party code.
+  - Remove unneeded stuff (spinner, etc)
+  - Use Travis to minify source and publish to GitHub Pages.

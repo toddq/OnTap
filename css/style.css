@@ -1,0 +1,356 @@
+body {
+  background-image: url('../images/background.jpg');
+  background-size: cover;
+  background-color: #000;
+  color: #fff;
+}
+
+html,body{
+	min-height:100%;
+}
+
+.header {
+	height: 125px;
+	padding-left: 25px;
+	padding-top: 10px;
+	border-bottom: 1px white dashed;
+
+    -webkit-user-select: none; /* Chrome/Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    user-seelct: none;
+}
+
+.header div {
+	display: inline-block;
+	text-align: center;
+}
+
+.header span {
+	display: block;
+	font-family: Georgia;
+	color: #fff;
+}
+
+.header div:nth-of-type(2) {
+	width: 60%;
+	height: 100%;
+}
+
+.header > div:nth-child(2) > div {
+	position: absolute;
+	top: 20px;
+}
+
+.header .date {
+	position: absolute;
+	top: 50px;
+}
+
+.header .logo {
+	height: 90%;
+	padding-right: 20px;
+}
+
+.header .h1,.h5 {
+	margin: 0px;
+}
+
+.header .h1 {
+	font-size: 45px;
+	line-height: 1.4;
+}
+
+.header .h5 {
+	color: #888;
+}
+
+input {
+	color: #000;
+}
+
+
+.tapList {
+	position: relative;	
+	min-height: 42px;
+}
+
+.tapList tr {
+	position: relative;
+}
+
+.tapList tr:nth-child(even),
+.tapList .row:nth-child(even),
+.tapList .row-header {
+	background-color: rgba(84, 84, 84, .5);
+}
+
+
+.tapList>tbody>tr>th, .tapList>tbody>tr>td {
+	border-top: none;
+}
+
+.tapList th, .row-header {
+	font-family: sans-serif;
+	font-weight: bold;
+	font-style:italic;
+	text-align: center;
+	border-bottom: 1px white dashed;
+	/*padding: 8px;*/
+}
+
+/*.tapList .col {
+	padding: 8px;
+}*/
+
+.tapList .row {
+	position: relative;
+}
+
+/* Ugh, fix this */
+.tapList .row>.row-wrapper {
+	padding: 0px;
+}
+
+.tapList .row-wrapper>div {
+	padding: 8px;
+}
+
+.tapList .col1, .col3 {
+	max-width: 140px;
+}
+
+.tapList .col2 {
+	border-left: 1px white dashed;
+	border-right: 1px white dashed;
+}
+
+
+
+.tapList .description {
+
+}
+
+.tapList span {
+	display: block;
+}
+
+.tapList .abv {
+	display: inline;
+	font-size: .7em;
+}
+
+.tapList .editing {
+	border: 2px solid #fff;
+    background-color: rgba(0, 100, 150, .4) !important;
+}
+
+.tapList .editing td {
+	padding: 10px;
+}
+
+.tapList .editing input {
+	position: relative;
+	z-index: 2;
+}
+
+.tapList .editButtonPanel {
+	text-align: center;
+	position: relative;
+    top: 15px;
+    height: 125px;
+    z-index: 1;
+}
+
+.editButtonPanel .btn {
+	width: 100px;
+	margin: 0px 5px;
+	/*border-color: #fff*/
+}
+
+/* TODO: sizing, color */
+.icon-hop {
+	width: 20px;
+	height: 25px;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+/*path.hop-background {
+	fill: #cc0000;
+}*/
+
+.icon-hop.on {
+	background-image: url('../images/hop_green.svg');
+	/*background-image: url('../images/hop_green2.svg');*/
+	/*background-image: url('../images/hop_green3.svg');*/
+}
+
+.icon-hop.off {
+	/*background-image: url('../images/hop_white.svg');*/
+	background-image: url('../images/hop_white_empty.svg');
+	height: 22px;
+}
+
+.BeerPic {
+	text-align: center;
+	color: white;
+}
+
+.BeerPic img {
+	height: 150px;
+}
+
+.BeerName {
+	height: 180px;
+	padding-left: 10px;
+	border-left: 1px white dashed;
+	font: 1.5em arial, verdana, sans-serif !important;
+}
+
+.BeerName h1 {
+	color: white;
+	font-size: 1.5em;
+	font-family: sans-serif;
+	font-weight: bold;
+	word-wrap: break-word;
+	margin: 0px 0px 10px 0px;
+}
+
+.BeerName h2 {
+	font: 1em Georgia;
+	color: #888888;
+	margin: 0px 0px 10px 0px;
+}
+
+.BeerName div, p {
+	color: white;
+	font: .75em Georgia;
+}
+
+.BeerName a {
+	color: white;
+	text-decoration: none;
+}
+
+.BeerName a:hover {
+	text-decoration: underline;
+}
+
+.BeerInfo {
+	border-left: 1px white dashed;
+	text-align: center;
+	font: 1.8em Georgia;
+	color: #D8D8D8;
+}
+
+.BeerInfo h2 {
+	text-align: center;
+	font: .5em Georgia;
+	color: #C0C0C0;
+	margin: 5px 0px 15px 0px;
+}
+
+.BeerInfo img {
+	width: 100px;
+}
+
+.BeerStatus {
+	text-align: center;
+	opacity: .8;
+	color: #C0C0C0;
+}
+
+.BeerStatus img {
+	width: 80px;
+}
+
+
+
+.btn-add {
+	color: #ffffff;
+    background-color: #22b24c;
+    border-color: #22b24c;
+    /*float: right;*/
+    margin-left: 20px;
+}
+
+.btn-add:hover {
+	background-color: #42E371;
+	border-color: #42E371;
+}
+
+.btn-delete {
+	/*float: left;
+	margin-left: 50px;*/
+}
+
+.auth {
+	margin-top: 0px;
+}
+
+.spinner {
+  position: relative;
+  /*right: 40px;
+  top: 20px;*/
+}
+
+/*
+table[dnd-list] .dndDraggingSource {
+    display: none;
+}
+
+table[dnd-list] .dndPlaceholder {
+    display: block;
+    background-color: #ddd;
+    min-height: 42px;
+}
+*/
+
+/* dnd-list stuff */
+/*
+div[dnd-list] * {
+	pointer-events: none;
+}
+*/
+
+div[dnd-list], div[dnd-list] > div {
+	/*pointer-events: auto;*/
+	position: relative;
+}
+
+div[dnd-list] .dndDraggingSource {
+	display: none;
+}
+
+div[dnd-list] .dndDragging {
+	border: 1px solid #fff;
+	background-color: #000;
+	cursor: move !important;
+}
+/*
+[ng-click] {
+	cursor: move;
+}*/
+
+div[dnd-list] .dndPlaceholder {
+	display: block;
+	/*background-color: rgba(0, 250, 0, .5);*/
+	/*background-color: #aaa;*/
+	min-height: 62px;
+}
+
+.sortable-ghost  div {
+	/*background-color: yellow;*/
+	opacity: 0.1;
+}
+
+/*#footer {
+	float: right;
+	color: #aeef33;
+	margin-top: 5px;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}*/

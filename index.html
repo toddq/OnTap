@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="OnTap">
+<head>
+    <meta charset="UTF-8">
+    <title ng-bind="title_name"></title>
+
+    <!-- CSS -->
+    <!-- load Bootstrap and custom style.css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/angular-toastr.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- JS -->
+    <!-- load Angular, Firebase, Firebase Angular Library, and custom app.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/angularfire.min.js"></script>
+    <script src="js/Sortable.js"></script>
+    <script src="js/ng-sortable.js"></script>
+    <!-- <script src="js/moment.js"></script> -->
+    <script src="js/angular-animate.min.js"></script>
+    <script src="js/angular-toastr.tpls.min.js"></script>
+    <!-- TODO: the spinner could probably be removed -->
+    <script src="js/spin.min.js"></script>
+    <script src="js/angular-spinner.min.js"></script>
+    <!-- <script src="js/ui-bootstrap-custom-tpls.min.js"></script> -->
+    <script src="js/ui-bootstrap-tpls-0.12.1.min.js"></script>
+    <script src="config.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body ng-controller="TapListController">
+
+	<div class="header"
+         ng-dblclick="toggleTapListEditMode()">
+		<div>
+			<span class="date">{{ date | date:'MMMM d, yyyy' }}</span>
+		</div>
+        <div>
+        	<img class="logo" src="images/logo.png">
+        	<div>
+	            <span class="h1 text-uppercase">Beers On Tap</span>
+	            <span class="h5">{{ name.$value }}</span>
+
+	        </div>
+        </div>
+    </div>
+
+	<div class="tapList container-fluid">
+
+        <div class="row row-header">
+            <div class="col1 col-sm-2"></div>
+            <div class="col2 col-sm-8 text-uppercase">Name</div>
+            <div class="col3 col-sm-2 text-uppercase">Info</div>
+        </div>
+
+        <ul class="list-unstyled" ng-sortable="sortConfig">
+
+            <li ng-repeat="beer in beers" ng-cloak
+                class="row"
+                ng-dblclick="editBeer(beer)" 
+                ng-class="{editing: editedBeer.$id == beer.$id}"
+                cancel-escape="editBeerCancel()">
+
+                <!-- normal display -->
+                <div class="row-wrapper" ng-hide="editedBeer.$id == beer.$id">
+
+                    <!-- Column 1 -->
+                    <div class="col col1 col-sm-2 color format" >
+                        <!-- <img ng-if="beer.color" src="images/pub_pint.svg"><br> -->
+                        <!-- <img ng-if="beer.color" src="images/bottle.svg"><br> -->
+                        {{ beer.color }}
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div class="col col2 col-sm-8 description">
+                        <!-- {{ beer.$priority }}  -->
+                        <span>{{ beer.name }}</span>
+                        <span>{{ beer.style }}</span>
+                        <span>{{ beer.description }}</span>
+                    </div>
+
+                    <!-- Column 3 -->
+                    <div class="col col3 col-sm-2 beerInfo">
+                        <span>{{ beer.abv }} <span class="abv" ng-if="beer.abv">% abv</span></span>
+                        <!-- <span>{{ beer.hops }}</span> -->
+                        <rating ng-if="beer.hops" ng-model="beer.hops" readonly="true" state-on="'icon-hop on'" state-off="'icon-hop off'"></rating>
+                    </div>
+                </div>
+
+                <!-- edit mode -->
+                <div class="row-wrapper" ng-show="editedBeer.$id == beer.$id">
+
+                    <!-- Column 1 -->
+                    <div class="col col1 col-sm-2 color format">
+                        <label for="beerColor" class="control-label">Color</label>
+<!--                         <div beer-color-selector='editedBeer.color' ></div> -->
+                        <input type="text" ng-model="editedBeer.color" class="form-control" 
+                               id="beerColor" placeholder="Color" />
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div class="col col2 col-sm-8 description">
+                        <div class="form-group">
+                            <!-- <label for="beerName" class="col-sm-2 control-label">Name</label> -->
+                            <div class="col-sm-12">
+                                <input type="text" ng-model="editedBeer.name" class="form-control" 
+                                       id="beerName" placeholder="Enter a beer name" 
+                                       show-focus="editedBeer.$id == beer.$id"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <!-- <label for="beerStyle" class="col-sm-2 control-label">Style</label> -->
+                            <div class="col-sm-12">
+                                <input type="text" ng-model="editedBeer.style" class="form-control"
+                                       id="beerStyle" placeholder="Enter a beer style" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <!-- <label for="beerDescription" class="col-sm-2 control-label">Description</label> -->
+                            <div class="col-sm-12">
+                                <input type="text" ng-model="editedBeer.description" class="form-control" 
+                                       id="beerDescription" placeholder="Enter a description"/>
+                           </div>
+                        </div>
+
+                        <div class="editButtonPanel">
+                            <button type="button" class="btn btn-success" 
+                                    ng-click="editBeerOk(beer)">Save</button>
+                            <button type="button" class="btn btn-default" 
+                                    ng-click="editBeerCancel()">Cancel</button>
+                            <button type="button" class="btn btn-danger btn-delete" 
+                                    ng-click="deleteBeer(beer)" ng-if="editedBeer.$id">Delete</button>
+                        </div>
+
+                    </div>
+
+                    <!-- Column 3 -->
+                    <div class="col col3 col-sm-2 beerInfo">
+                        <label for="beerAbv" class="control-label">ABV</label>
+                        <input type="text" ng-model="editedBeer.abv" class="form-control" 
+                               id="beerAbv" placeHolder="% abv"/>
+                        <label for="beerHops" class="control-label">Hops</label>
+                        <!-- <input type="text" ng-model="editedBeer.hops" class="form-control"
+                               id="beerHops" placeholder="Hoppyness" /> -->
+                       <rating ng-model="editedBeer.hops" state-on="'icon-hop on'" state-off="'icon-hop off'"></rating>
+                    </div>
+                </div>
+
+            </li>
+        </ul>
+
+        <div ng-hide="configLoaded">
+            Error: Configuration was not loaded.  Did you create/edit a config.js file?
+        </div>
+    </div>
+
+    <div class="navbar" ng-show="editMode">
+        <button id="new-beer-btn"
+                class="btn btn-add pull-left"
+                ng-click="newBeer()"
+                ng-show="editingAllowed() && !editedBeer">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+
+        <form id="auth" class="auth navbar-form pull-right collapse navbar-collapse">
+            
+            <!-- ="{radius:30, width:8, length: 16}" -->
+            <span us-spinner="{color: '#fff', radius: 5, width: 4, length: 8, lines: 11, corners: 2, top: '20px', left: '-30px'}" class="spinner" spinner-key="login-spinner"></span>
+
+            <fieldset ng-disabled="signingIn">
+                <div class="form-group" ng-hide="user">
+                    <input type="email" class="form-control" placeholder="email" ng-model="email" />
+                </div>
+                <div class="form-group" ng-hide="user">
+                    <input type="password" class="form-control" placeholder="password" ng-model="password" />
+                </div>
+                <button type="submit" 
+                        class="btn btn-default" 
+                        ng-hide="user || !authRequired" 
+                        click-spinner="signIn(email, password)">
+                    Sign In
+                    <span class="glyphicon"></span>
+                </button>
+                <button type="submit" class="btn btn-default" ng-show="!authRequired" ng-click="signUp(email, password)">
+                    Sign Up
+                </button>
+                <button type="submit" class="btn btn-default"ng-show="user" ng-click="signOut()">Sign Out</button>
+            </fieldset>
+        </form>
+    </div>
+
+<script type='text/ng-template' id='colorselector.html'>
+    <select>
+        <option value="106" data-color="#A0522D">sienna</option>
+        <option value="47" data-color="#CD5C5C" selected="selected">indianred</option>
+        <option value="87" data-color="#FF4500">orangered</option>
+        ...
+        <option value="15" data-color="#DC143C">crimson</option>
+        <option value="24" data-color="#FF8C00">darkorange</option>
+        <option value="78" data-color="#C71585">mediumvioletred</option>
+    </select>
+
+</script>
+
+</body>
+</html>
