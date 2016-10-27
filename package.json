@@ -1,0 +1,37 @@
+{
+  "name": "ontap",
+  "version": "0.0.1",
+  "description": "Web based tap list",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toddq/OnTap.git"
+  },
+  "author": "toddq <todd@quessenberry.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/toddq/OnTap/issues"
+  },
+  "homepage": "https://github.com/toddq/OnTap",
+  "dependencies": {
+    "reactfire": "~1.0.0",
+    "firebase": "~3.0.3",
+    "react": "~15.1.0",
+    "watchify": "~3.7.0",
+    "gulp-util": "~3.0.7",
+    "gulp-notify": "~2.2.0"
+  },
+  "devDependencies": {
+    "gulp": "~3.9.1",
+    "browserify": "~13.0.1",
+    "vinyl-source-stream": "~1.1.0",
+    "reactify": "~1.1.1",
+    "nodemon": "~1.9.2",
+    "browser-sync": "~2.13.0",
+    "open": "0.0.5",
+    "gulp-webserver": "~0.9.1"
+  }
+}

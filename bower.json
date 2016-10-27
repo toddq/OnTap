@@ -1,0 +1,21 @@
+{
+  "name": "ontap",
+  "homepage": "https://github.com/toddq/OnTap",
+  "authors": [
+    "toddq <todd@quessenberry.com>"
+  ],
+  "description": "Web based tap list",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "reactfire": "^1.0.0"
+  }
+}
