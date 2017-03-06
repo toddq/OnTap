@@ -1,18 +1,25 @@
 <template>
-<ul>
-    <li>Beer 1</li>
-    <li>Beer 2</li>
-    <li>Beer 3</li>
-</ul>
+<div>
+    <hr/>
+    <li v-for="beer in beers">
+        {{ beer.name }}
+    </li>
+</div>
 </template>
 
 <script>
 export default {
     name: 'beer-list',
     data () {
-        return {}
+        return {
+            beers: []
+        }
+    },
+    mounted () {
+        this.beers.push({name: 'Beer 1'})
+        this.beers.push({name: 'Beer 2'})
+        this.beers.push({name: 'Beer 3'})
     }
-
 }
 </script>
 
