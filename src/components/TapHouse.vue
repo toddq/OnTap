@@ -21,6 +21,7 @@ export default {
 <style scoped lang="scss">
 .taphouse {
     .header {
+        text-align: center;
         margin-bottom: 20px;
     }
     img.logo {
