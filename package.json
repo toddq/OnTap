@@ -1,15 +1,17 @@
 {
   "name": "ontap",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Digital taplist using Vue.js and Firebase.",
   "author": "Todd Quessenberry <todd@quessenberry.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
-    "lint": "eslint --ext .js,.vue src"
+    "lint": "eslint --fix --ext .js,.vue src",
+    "start": "node server.js"
   },
   "dependencies": {
+    "express": "^4.15.2",
     "vue": "^2.2.1",
     "vue-router": "^2.2.0"
   },

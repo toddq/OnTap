@@ -1,0 +1,56 @@
+image: node:alpine
+
+stages:
+  - compile
+  - package
+  - deploy
+
+cache:
+  untracked: true
+  key: "$CI_BUILD_REF_NAME"
+  paths:
+    - node_modules/
+
+compile:
+  stage: compile
+  before_script:
+    - npm install
+  script:
+    - npm run build
+  artifacts:
+    name: 'OnTap'
+    expire_in: 1 week
+    paths:
+      - dist/
+      - server.js
+
+create_docker_container:
+  stage: package
+  dependencies:
+    - compile
+  image: docker:1.12
+  services:
+    - docker:1.12-dind
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
+  only:
+    - master
+
+deploy_to_production:
+  stage: deploy
+  tags:
+    - production
+  dependencies: []
+  variables:
+    CONTAINER_NAME: "ontap"
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+  script:
+    - docker pull $CI_REGISTRY_IMAGE
+    - docker rm -f $CONTAINER_NAME || true
+    - docker run -d --name $CONTAINER_NAME -p 80:8080 $CI_REGISTRY_IMAGE npm start
+  only:
+    - master
