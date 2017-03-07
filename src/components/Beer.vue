@@ -1,13 +1,14 @@
 <template>
 <div>
-    <beer-edit v-if="beer.isEditing" :beer="beer"></beer-edit>
-    <beer-view v-else :beer="beer"></beer-view>
+    <beer-edit v-if="isEditing" :beer="beer" @cancel-edit="cancelEdit" @save="saveBeer"></beer-edit>
+    <beer-view v-else :beer="beer" @dblclick.native="editBeer"></beer-view>
 </div>
 </template>
 
 <script>
 import BeerView from './BeerView'
 import BeerEdit from './BeerEdit'
+import store from '@/Store'
 
 export default {
     name: 'beer',
@@ -15,6 +16,36 @@ export default {
     components: {
         'beer-view': BeerView,
         'beer-edit': BeerEdit
+    },
+    data () {
+        return {
+            isEditing: false,
+            sharedState: store
+        }
+    },
+    methods: {
+        editBeer () {
+            if (this.sharedState.canEdit()) {
+                console.log('edit beer', this.beer.data.name)
+                this._setEditState(true)
+            }
+        },
+        cancelEdit () {
+            console.log('cancel edit beer', this.beer.data.name)
+            this._setEditState(false)
+        },
+        saveBeer () {
+            console.log('saving beer changes', this.beer.data.name)
+            // TODO:
+            if (!this.beer.id) {
+                this.beer.id = 99
+            }
+            this._setEditState(false)
+        },
+        _setEditState (newState) {
+            this.isEditing = newState
+            this.sharedState.isEditing(this.isEditing)
+        }
     }
 }
 </script>

@@ -4,7 +4,7 @@
     <!-- :data="beer.data" -->
     <beer v-for="beer in beers" :beer="beer" :key="beer.id"></beer>
     <nav class="nav">
-        <div class="nav-left">
+        <div class="nav-left" v-if="sharedState.canEdit()">
             <button class="button is-success is-medium" role="button" @click="addBeer()">
                 <span class="icon-plus"></span>
             </button>
@@ -16,6 +16,7 @@
 <script>
 import Beer from './Beer'
 import eventBus from '@/EventBus'
+import store from '@/Store'
 
 export default {
     name: 'beer-list',
@@ -24,7 +25,8 @@ export default {
     },
     data () {
         return {
-            beers: []
+            beers: [],
+            sharedState: store
         }
     },
     created () {
@@ -46,19 +48,33 @@ export default {
         addBeer () {
             // should beer have it's own object?
             // edit mode....
-            this.beers.push({id: undefined, isEditing: true, data: { priority: this.beers.length }})
+            // isEditing: true,
+            var newBeer = {id: undefined, data: { priority: this.beers.length }}
+            console.log('new beer', newBeer)
+            this.beers.push(newBeer)
+            // a lookup would be better than just poking the last one
+            this.$nextTick(() => {
+                console.log(this.$children)
+                newBeer = this.$children[this.$children.length - 1]
+                console.log(newBeer)
+                newBeer.editBeer()
+            })
         },
         deleteBeer (beer) {
             console.log('delete beer', beer)
             var index = this.beers.indexOf(beer)
             console.log('found beer at index', index)
             this.beers.splice(index, 1)
+            this.sharedState.isEditing(false)
         }
     }
 }
 </script>
 
 <style scoped>
+.nav {
+    margin-top: 15px;
+}
 .icon-plus:before {
     content: "\2795";
 }

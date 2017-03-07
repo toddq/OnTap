@@ -12,3 +12,9 @@ export default {
     props: ['beer']
 }
 </script>
+
+<style >
+.columns.is-gapless > .column {
+    padding: 10px;
+}
+</style>
