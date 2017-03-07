@@ -1,15 +1,21 @@
 <template>
-<div class="columns is-gapless">
-    <div class="column">{{ data.srm }} SRM<br>{{ data.glass }} glass</div>
-    <div class="column is-half">{{ data.name }}<br>{{ data.description }}</div>
-    <div class="column">{{ data.abv }}% avb<br>{{ data.ibu }} IBU</div>
+<div>
+    <beer-edit v-if="beer.isEditing" :beer="beer"></beer-edit>
+    <beer-view v-else :beer="beer"></beer-view>
 </div>
 </template>
 
 <script>
+import BeerView from './BeerView'
+import BeerEdit from './BeerEdit'
+
 export default {
     name: 'beer',
-    props: ['data']
+    props: ['beer'],
+    components: {
+        'beer-view': BeerView,
+        'beer-edit': BeerEdit
+    }
 }
 </script>
 
