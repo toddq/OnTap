@@ -8,6 +8,7 @@
 <script>
 import BeerView from './BeerView'
 import BeerEdit from './BeerEdit'
+import Data from '@/Data'
 import store from '@/Store'
 
 export default {
@@ -38,9 +39,9 @@ export default {
             console.log('saving beer changes', this.beer.data.name)
             // TODO:
             if (!this.beer.id) {
-                // Data.save(beer) // who's responsible for this?
                 this.beer.id = Math.floor(Math.random() * 100)
             }
+            Data.save(this.beer) // who's responsible for this?
             this._setEditState(false)
         },
         _setEditState (newState) {

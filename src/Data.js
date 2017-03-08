@@ -1,3 +1,5 @@
+import eventBus from '@/EventBus'
+
 export default {
     load () {
         console.log('loading fake beer list')
@@ -20,8 +22,10 @@ export default {
     },
     save (beer) {
         console.log('Data: saving beer', beer)
+        eventBus.$emit('beer-saved', beer)
     },
     delete (beer) {
         console.log('Data: deleting beer', beer)
+        eventBus.$emit('beer-deleted', beer)
     }
 }
