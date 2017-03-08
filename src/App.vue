@@ -1,18 +1,21 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
+    <help></help>
     <router-view></router-view>
     <notifications></notifications>
   </div>
 </template>
 
 <script>
-import notifications from '@/components/Notifications'
+import Help from '@/components/Help'
+import Notifications from '@/components/Notifications'
 
 export default {
     name: 'app',
     components: {
-        notifications
+        Help,
+        Notifications
     }
 }
 </script>
