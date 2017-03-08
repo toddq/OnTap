@@ -1,8 +1,9 @@
 <template>
 <div>
     <hr/>
-    <!-- :data="beer.data" -->
-    <beer v-for="beer in beers" :beer="beer" :key="beer.id"></beer>
+    <draggable v-model="beers" :options="sortConfig" @start="dragging=true" @end="dragging=false" :class="{dragging: dragging}">
+         <beer v-for="beer in beers" :beer="beer" :key="beer.id"></beer>
+    </draggable>
     <nav class="nav">
         <div class="nav-left" v-if="sharedState.canEdit()">
             <button class="button is-success is-medium" role="button" @click="addBeer()">
@@ -14,6 +15,7 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
 import Beer from './Beer'
 import eventBus from '@/EventBus'
 import store from '@/Store'
@@ -21,11 +23,20 @@ import store from '@/Store'
 export default {
     name: 'beer-list',
     components: {
-        'beer': Beer
+        'beer': Beer,
+        draggable
     },
     data () {
         return {
             beers: [],
+            dragging: false,
+            sortConfig: {
+                filter: '.row-header',
+                // tie disabled into sharedState.canEdit()
+                disabled: false,
+                // disabled: !store.canEdit(),
+                onSort: this.onItemReorder
+            },
             sharedState: store
         }
     },
@@ -66,6 +77,9 @@ export default {
             console.log('found beer at index', index)
             this.beers.splice(index, 1)
             this.sharedState.isEditing(false)
+        },
+        onItemReorder () {
+            console.log('on item reorder')
         }
     }
 }
@@ -77,5 +91,9 @@ export default {
 }
 .icon-plus:before {
     content: "\2795";
+}
+.dragging {
+    /* unfortunately this doesn't seem to currently work */
+    cursor: move !important;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="is-editing">
     <div class="columns is-gapless">
         <div class="column">
         <input type="text" name="srm" v-model="editedBeer.srm" placeholder="Color (SRM)"><br>
@@ -15,10 +15,10 @@
             <input type="text" name="ibu" v-model="editedBeer.ibu" placeholder="IBUs">
         </div>
     </div>
-    <div class="container hero-buttons">
-        <button class="button is-success is-medium" @click="onSave()">Save</button>
-        <button class="button is-medium" @click="onCancel()">Cancel</button>
-        <button class="button is-danger is-medium" @click="onDelete()" v-if="beer.id">Delete</button>
+    <div class="container hero-buttons button-container">
+        <button class="button is-success is-large" @click="onSave()">Save</button>
+        <button class="button is-large" @click="onCancel()">Cancel</button>
+        <button class="button is-danger is-large" @click="onDelete()" v-if="beer.id">Delete</button>
     </div>
 </div>
 </template>
@@ -60,3 +60,16 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.is-editing {
+    border: 2px solid #fff;
+    background-color: rgba(0, 100, 150, .4);
+}
+.button-container {
+    position: relative;
+    top: -18px;
+    height: 0px;
+    z-index: 99;
+}
+</style>
