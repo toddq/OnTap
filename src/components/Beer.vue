@@ -38,7 +38,8 @@ export default {
             console.log('saving beer changes', this.beer.data.name)
             // TODO:
             if (!this.beer.id) {
-                this.beer.id = 99
+                // Data.save(beer) // who's responsible for this?
+                this.beer.id = Math.floor(Math.random() * 100)
             }
             this._setEditState(false)
         },

@@ -1,8 +1,10 @@
 <template>
 <div>
     <hr/>
-    <draggable v-model="beers" :options="sortConfig" @start="dragging=true" @end="dragging=false" :class="{dragging: dragging}">
-         <beer v-for="beer in beers" :beer="beer" :key="beer.id"></beer>
+    <draggable v-model="beers" :options="dragOptions"
+               :class="{draggable: sharedState.canEdit()}"
+               @start="onSortStart" @end="onSortEnd">
+        <beer v-for="beer in beers" :beer="beer" :key="beer.id"></beer>
     </draggable>
     <nav class="nav">
         <div class="nav-left" v-if="sharedState.canEdit()">
@@ -19,6 +21,7 @@ import draggable from 'vuedraggable'
 import Beer from './Beer'
 import eventBus from '@/EventBus'
 import store from '@/Store'
+import Data from '@/Data'
 
 export default {
     name: 'beer-list',
@@ -29,15 +32,15 @@ export default {
     data () {
         return {
             beers: [],
-            dragging: false,
-            sortConfig: {
-                filter: '.row-header',
-                // tie disabled into sharedState.canEdit()
-                disabled: false,
-                // disabled: !store.canEdit(),
-                onSort: this.onItemReorder
-            },
             sharedState: store
+        }
+    },
+    computed: {
+        dragOptions () {
+            return {
+                // filter: '.row-header',
+                disabled: !store.canEdit()
+            }
         }
     },
     created () {
@@ -52,22 +55,20 @@ export default {
     methods: {
         fetchBeers () {
             // faking it out for now
-            this.beers.push({id: 1, data: {name: 'Beer 1', srm: 5, glass: 'nonic', description: 'A crisp refreshing German Lager', abv: 4.9, ibu: 28}})
-            this.beers.push({id: 2, data: {name: 'Beer 2', srm: 12, glass: 'shaker', description: 'A hoppy American Pale Ale', abv: 5.4, ibu: 36}})
-            this.beers.push({id: 3, data: {name: 'Beer 3', srm: 35, glass: 'tulip', description: 'Robust Porter', abv: 6.7, ibu: 32}})
+            this.beers.push.apply(this.beers, Data.load())
         },
         addBeer () {
             // should beer have it's own object?
-            // edit mode....
-            // isEditing: true,
             var newBeer = {id: undefined, data: { priority: this.beers.length }}
             console.log('new beer', newBeer)
             this.beers.push(newBeer)
-            // a lookup would be better than just poking the last one
+            // hmmm, the definition of children changed on me...
+            // TODO: this definitely needs some work.  event?
             this.$nextTick(() => {
-                console.log(this.$children)
-                newBeer = this.$children[this.$children.length - 1]
-                console.log(newBeer)
+                var $beerChildren = this.$children[0].$children
+                console.log('all children', $beerChildren)
+                newBeer = $beerChildren[$beerChildren.length - 1]
+                console.log('new beer component', newBeer)
                 newBeer.editBeer()
             })
         },
@@ -75,11 +76,30 @@ export default {
             console.log('delete beer', beer)
             var index = this.beers.indexOf(beer)
             console.log('found beer at index', index)
+            Data.delete(beer)
             this.beers.splice(index, 1)
             this.sharedState.isEditing(false)
         },
-        onItemReorder () {
-            console.log('on item reorder')
+        onSortStart (evt) {
+            console.log('sort start, current order')
+            this.beers.forEach((beer, index) => {
+                console.log(index, beer.data.name)
+            })
+        },
+        onSortEnd (evt) {
+            console.log('on sort end, ending order', arguments)
+            this.beers.forEach((beer, index) => {
+                console.log(index, beer.data.name)
+                // save the new index as an attribute on the beer
+                this._setOrder(beer, index)
+            })
+        },
+        _setOrder (beer, value) {
+            // so... $priority is kind of a Firebase thing
+            if (beer.data.$priority !== value) {
+                beer.data.$priority = value
+                Data.save(beer)
+            }
         }
     }
 }
@@ -92,8 +112,17 @@ export default {
 .icon-plus:before {
     content: "\2795";
 }
-.dragging {
-    /* unfortunately this doesn't seem to currently work */
-    cursor: move !important;
+.draggable {
+    cursor: move;
+}
+.sortable-chosen,
+.sortable-drag {
+    color: white;
+    background-color: #666;
+}
+.sortable-ghost {
+    opacity: .3;
+    color: initial;
+    background-color: #ccc;
 }
 </style>

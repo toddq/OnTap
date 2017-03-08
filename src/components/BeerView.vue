@@ -2,7 +2,7 @@
 <div class="columns is-gapless">
     <div class="column">{{ beer.data.srm }} SRM<br>{{ beer.data.glass }} glass</div>
     <div class="column is-half">{{ beer.data.name }}<br>{{ beer.data.description }}</div>
-    <div class="column">{{ beer.data.abv }}% avb<br>{{ beer.data.ibu }} IBU</div>
+    <div class="column">{{ beer.data.abv }}% abv<br>{{ beer.data.ibu }} IBU</div>
 </div>
 </template>
 
