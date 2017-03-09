@@ -18,14 +18,12 @@
     <div class="container hero-buttons button-container">
         <button class="button is-success is-large" @click="onSave()">Save</button>
         <button class="button is-large" @click="onCancel()">Cancel</button>
-        <button class="button is-danger is-large" @click="onDelete()" v-if="beer.id">Delete</button>
+        <button class="button is-danger is-large" @click="onDelete()" v-if="beer['.key']">Delete</button>
     </div>
 </div>
 </template>
 
 <script>
-import eventBus from '@/EventBus'
-
 export default {
     name: 'beer-edit',
     props: ['beer'],
@@ -35,27 +33,22 @@ export default {
         }
     },
     created () {
-        // make a copy of the prop so we can cancel
-        Object.assign(this.editedBeer, this.beer.data)
+        // make a copy of the prop so we can cancel and ditch changes
+        Object.assign(this.editedBeer, this.beer)
     },
     methods: {
         onSave () {
             console.log('saving', this.beer)
-            // copy changes back.  pretty sure there's a better way to do this, but don't know what it is
-            Object.assign(this.beer.data, this.editedBeer)
+            // copy changes back
+            Object.assign(this.beer, this.editedBeer)
             this.$emit('save')
         },
         onCancel () {
             console.log('cancel edit of', this.beer)
-            // on cancel of new beer creation, don't save anything
-            if (!this.beer.id) {
-                this.onDelete()
-            }
-            this.$emit('cancel-edit')
+            this.$emit('cancel')
         },
         onDelete () {
-            console.log('deleting', this.beer)
-            eventBus.$emit('delete-beer', this.beer)
+            this.$emit('delete')
         }
     }
 }
