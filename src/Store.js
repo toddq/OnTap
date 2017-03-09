@@ -3,13 +3,23 @@
 export default {
     debug: true,
     state: {
-        canEdit: true
+        isEditMode: false,
+        currentlyEditing: false
     },
     isEditing (newValue) {
-        this.debug && console.log('currently editing is now', newValue)
-        this.state.canEdit = !newValue
+        if (newValue !== undefined) {
+            this.debug && console.log('currently editing is now', newValue)
+            this.state.currentlyEditing = newValue
+        }
+        return this.state.currentlyEditing
     },
     canEdit () {
-        return this.state.canEdit
+        return this.isEditMode() && !this.state.currentlyEditing
+    },
+    isEditMode (editMode) {
+        if (editMode !== undefined) {
+            this.state.isEditMode = !!editMode
+        }
+        return this.state.isEditMode
     }
 }

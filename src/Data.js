@@ -14,6 +14,14 @@ class Data {
     getDb () {
         return this.db
     }
+    setRoute (route) {
+        var _route = `${route || ''}/beers`
+        if (this.route !== _route) {
+            console.log('Data: setting route to', _route)
+            this.route = _route
+            eventBus.$emit('route-changed', this.route)
+        }
+    }
     loadBeers () {
         return this._getRef().orderByChild('sort-order')
     }

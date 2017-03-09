@@ -48,11 +48,13 @@ export default {
         eventBus.$on('beer-added', this.loadData)
         eventBus.$on('beer-deleted', this.onBeerDeleted)
         eventBus.$on('cancel-edit', this.onCancelEdit)
+        eventBus.$on('route-changed', this.loadData)
     },
     destroyed () {
         eventBus.$off('beer-added', this.loadData)
         eventBus.$off('beer-deleted', this.onBeerDeleted)
         eventBus.$off('cancel-edit', this.onCancelEdit)
+        eventBus.$off('route-id-changed', this.loadData)
     },
     methods: {
         loadData () {

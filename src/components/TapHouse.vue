@@ -10,11 +10,35 @@
 
 <script>
 import BeerList from './BeerList'
+import {data} from '@/Data'
+import store from '@/Store'
+import {includes} from 'lodash'
 
 export default {
     name: 'taphouse',
     components: {
         'beer-list': BeerList
+    },
+    created () {
+        console.log('initializing TapHouse')
+        this.setRouteId(this.$route)
+        this.setEditMode(this.$route)
+    },
+    watch: {
+        '$route' (to, from) {
+            console.log('route has changed from', from.params, 'to', to.params)
+            this.setRouteId(to)
+            this.setEditMode(to)
+        }
+    },
+    methods: {
+        setRouteId (route) {
+            data.setRoute(route.params.id)
+        },
+        setEditMode (route) {
+            var editMode = includes(route.params, 'edit')
+            store.isEditMode(editMode)
+        }
     }
 }
 </script>
