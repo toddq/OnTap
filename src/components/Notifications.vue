@@ -11,8 +11,10 @@ export default {
     data () {
         return {
             subscriptions: [
-                {'beer-saved': this.onBeerSaved},
-                {'beer-deleted': this.onBeerDeleted}
+                {'beer-added': this.onBeerAdded},
+                {'beer-updated': this.onBeerSaved},
+                {'beer-deleted': this.onBeerDeleted},
+                {'error': this.onError}
             ]
         }
     },
@@ -29,13 +31,21 @@ export default {
         })
     },
     methods: {
+        onBeerAdded (beer) {
+            console.log('beer saved', beer.name)
+            Toast.success('Added ' + beer.name)
+        },
         onBeerSaved (beer) {
-            console.log('beer saved', beer.data.name)
-            Toast.success('Saved ' + beer.data.name)
+            console.log('beer saved', beer.name)
+            Toast.success('Saved ' + beer.name)
         },
         onBeerDeleted (beer) {
-            console.log('beer deleted', beer.data.name)
-            Toast.success('Deleted ' + beer.data.name)
+            console.log('beer deleted', beer.name)
+            Toast.success('Deleted ' + beer.name)
+        },
+        onError (msg, error) {
+            console.error(msg, error)
+            Toast.error(msg)
         }
     }
 }

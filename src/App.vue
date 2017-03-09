@@ -1,15 +1,27 @@
 <template>
-  <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
-    <help></help>
-    <router-view></router-view>
-    <notifications></notifications>
-  </div>
+    <div id='app'>
+        <help></help>
+        <router-view></router-view>
+        <notifications></notifications>
+    </div>
 </template>
 
 <script>
 import Help from '@/components/Help'
 import Notifications from '@/components/Notifications'
+import { data } from '@/Data'
+import Firebase from 'firebase'
+
+var firebaseConfig = {
+    apiKey: 'AIzaSyDMC7_SnUSS6qxi44iU6vFgjVFUub8iScw',
+    authDomain: 'ontap-a835d.firebaseapp.com',
+    databaseURL: 'https://ontap-a835d.firebaseio.com',
+    storageBucket: 'ontap-a835d.appspot.com',
+    messagingSenderId: '1069253184483'
+}
+
+var app = Firebase.initializeApp(firebaseConfig)
+data.setDb(app.database())
 
 export default {
     name: 'app',
@@ -20,7 +32,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 @import '~bulma';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

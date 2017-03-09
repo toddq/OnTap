@@ -3,7 +3,7 @@
     <hr/>
     <draggable v-model="beers" :options="dragOptions"
                :class="{draggable: sharedState.canEdit()}"
-               @start="onSortStart" @end="onSortEnd">
+               @end="onSortEnd">
         <beer v-for="beer in beers" :beer="beer" :key="beer.id"></beer>
     </draggable>
     <nav class="nav">
@@ -21,7 +21,7 @@ import draggable from 'vuedraggable'
 import Beer from './Beer'
 import eventBus from '@/EventBus'
 import store from '@/Store'
-import Data from '@/Data'
+import {data} from '@/Data'
 
 export default {
     name: 'beer-list',
@@ -44,62 +44,62 @@ export default {
         }
     },
     created () {
-        eventBus.$on('delete-beer', this.deleteBeer)
+        this.loadData()
+        eventBus.$on('beer-added', this.loadData)
+        eventBus.$on('beer-deleted', this.onBeerDeleted)
+        eventBus.$on('cancel-edit', this.onCancelEdit)
     },
     destroyed () {
-        eventBus.$off('delete-beer', this.deleteBeer)
-    },
-    mounted () {
-        this.fetchBeers()
+        eventBus.$off('beer-added', this.loadData)
+        eventBus.$off('beer-deleted', this.onBeerDeleted)
+        eventBus.$off('cancel-edit', this.onCancelEdit)
     },
     methods: {
-        fetchBeers () {
-            // faking it out for now
-            this.beers.push.apply(this.beers, Data.load())
+        loadData () {
+            console.log('BeerList: LOADING DATA')
+            this.$bindAsArray('beers', data.loadBeers())
         },
         addBeer () {
-            // should beer have it's own object?
-            var newBeer = {id: undefined, data: { priority: this.beers.length }}
-            console.log('new beer', newBeer)
+            var newBeer = {'sort-order': this.beers.length}
+            // pushing to the array does not push it to Firebase
             this.beers.push(newBeer)
-            // hmmm, the definition of children changed on me...
-            // TODO: this definitely needs some work.  event?
             this.$nextTick(() => {
-                var $beerChildren = this.$children[0].$children
-                console.log('all children', $beerChildren)
-                newBeer = $beerChildren[$beerChildren.length - 1]
-                console.log('new beer component', newBeer)
-                newBeer.editBeer()
+                eventBus.$emit('edit-beer', newBeer)
             })
         },
-        deleteBeer (beer) {
-            console.log('delete beer', beer)
-            var index = this.beers.indexOf(beer)
-            console.log('found beer at index', index)
-            Data.delete(beer)
-            this.beers.splice(index, 1)
-            this.sharedState.isEditing(false)
-        },
-        onSortStart (evt) {
-            console.log('sort start, current order')
-            this.beers.forEach((beer, index) => {
-                console.log(index, beer.data.name)
-            })
-        },
-        onSortEnd (evt) {
-            console.log('on sort end, ending order', arguments)
-            this.beers.forEach((beer, index) => {
-                console.log(index, beer.data.name)
-                // save the new index as an attribute on the beer
-                this._setOrder(beer, index)
-            })
-        },
-        _setOrder (beer, value) {
-            // so... $priority is kind of a Firebase thing
-            if (beer.data.$priority !== value) {
-                beer.data.$priority = value
-                Data.save(beer)
+        onCancelEdit (beer) {
+            if (!beer['.key']) {
+                console.log('removing local add cancel')
+                var index = this.beers.indexOf(beer)
+                console.log('found beer at index', index)
+                this.beers.splice(index, 1)
             }
+        },
+        onBeerDeleted () {
+            this.onSortEnd()
+        },
+        onSortEnd () {
+            console.log('on sort end, updating orders')
+            var hasChanged = false
+            this.beers.forEach((beer, index) => {
+                // save the new index as an attribute on the beer
+                hasChanged = hasChanged || this._setOrder(beer, index)
+            })
+
+            // workaround: once drag-n-drop sorting is used, vuefire loses the ability
+            // to track changes coming from the server, so force a reload
+            if (hasChanged) {
+                console.log('sorting has resulted in changed data')
+                this.$nextTick(this.loadData)
+            }
+        },
+        _setOrder (beer, sortOrder) {
+            if (beer['sort-order'] !== sortOrder) {
+                beer['sort-order'] = sortOrder
+                eventBus.$emit('save-beer', beer)
+                return true
+            }
+            return false
         }
     }
 }

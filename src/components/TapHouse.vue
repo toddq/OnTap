@@ -1,7 +1,7 @@
 <template>
 <div class="taphouse">
     <div class="header">
-        <img src="../assets/logo.png" class="logo">
+        <img src="/static/favicon.png" class="logo">
         <span class="title">Beers on tap</span>
     </div>
     <beer-list></beer-list>
@@ -10,6 +10,7 @@
 
 <script>
 import BeerList from './BeerList'
+
 export default {
     name: 'taphouse',
     components: {
