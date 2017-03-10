@@ -1,7 +1,9 @@
 <template>
 <div class="taphouse">
     <div class="header">
-        <img src="/static/favicon.png" class="logo">
+        <div class="logo-background">
+            <img src="/static/favicon.png" class="logo">
+        </div>
         <span class="title">Beers on tap</span>
     </div>
     <beer-list></beer-list>
@@ -53,14 +55,26 @@ export default {
         text-align: center;
         margin-bottom: 20px;
     }
-    img.logo {
-        height: 40px;
-        padding-right: 10px;
-    }
     .title {
         font-size: 3em;
         text-transform: uppercase;
+        color: #fff;
     }
-
+    // this is mostly temporary
+    .logo-background {
+        display: inline-block;
+        background-color: #fff;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+        vertical-align: bottom;
+    }
+    img.logo {
+        height: 65%;
+        width: 65%;
+        position: relative;
+        top: 15%;
+    }
 }
 </style>

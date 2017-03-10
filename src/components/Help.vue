@@ -47,6 +47,9 @@ export default {
 </script>
 
 <style scoped>
+div {
+    color: #000;
+}
 .icon-help {
     font-size: 1.5em;
     position: absolute;
@@ -55,11 +58,15 @@ export default {
     height: 30px;
     border-radius: 50%;
     text-align: center;
-    border: 2px solid #333;
-    background-color: #666;
+    border: 2px solid #ccc;
+    background-color: #444;
 }
 .icon-help:before {
     content: "\2754";
+}
+.icon-help:hover {
+    background-color: #666;
+    border-color: #eee;
 }
 ul {
     list-style-type: square;

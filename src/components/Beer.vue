@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="beer-row">
     <beer-edit v-if="isEditing" :beer="beer" @cancel="cancelEdit" @save="saveBeer" @delete="deleteBeer"></beer-edit>
     <beer-view v-else :beer="beer" @dblclick.native="editBeer"></beer-view>
 </div>
@@ -59,8 +59,16 @@ export default {
 }
 </script>
 
-<style scoped>
-div {
-    border: 1px solid;
+<style lang="scss">
+.beer-row {
+    .column {
+        border-right: 1px #fff dashed;
+    }
+    .column:last-child {
+        border-right: none;
+    }
+}
+.beer-row:nth-child(odd) {
+    background-color: rgba(84, 84, 84, .5);
 }
 </style>

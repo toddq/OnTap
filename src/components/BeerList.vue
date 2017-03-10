@@ -1,6 +1,6 @@
 <template>
-<div>
-    <hr/>
+<div class="beer-list">
+    <hr>
     <draggable v-model="beers" :options="dragOptions"
                :class="{draggable: sharedState.canEdit()}"
                @end="onSortEnd">
@@ -37,7 +37,6 @@ export default {
     computed: {
         dragOptions () {
             return {
-                // filter: '.row-header',
                 disabled: !store.canEdit()
             }
         }
@@ -108,8 +107,22 @@ export default {
 </script>
 
 <style scoped>
+.beer-list {
+    border-top: 1px #fff dashed;
+}
+.beer-list > hr {
+    border: 0;
+    border-bottom: 1px #fff dashed;
+    height: 10px;
+    background-color: transparent;
+    margin: 0;
+}
 .nav {
     margin-top: 15px;
+    background-color: transparent;
+}
+.nav .button {
+    margin-left: 15px;
 }
 .icon-plus:before {
     content: "\2795";
@@ -119,12 +132,13 @@ export default {
 }
 .sortable-chosen,
 .sortable-drag {
-    color: white;
-    background-color: #666;
+    background-color: #666 !important;
+    border: 1px solid #fff;
+    border-radius: 5px;
 }
 .sortable-ghost {
     opacity: .3;
     color: initial;
-    background-color: #ccc;
+    background-color: #ccc !important;
 }
 </style>
