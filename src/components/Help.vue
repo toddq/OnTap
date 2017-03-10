@@ -1,6 +1,8 @@
 <template>
-<div>
-    <a class="icon-help" @click="showModal = true"></a>
+<div v-if="sharedState.isEditMode()">
+    <button class="button btn-help" @click="showModal = true">
+        <icon name="question" class="icon"></icon>
+    </button>
 
     <div class="modal" :class="{'is-active': showModal}">
         <div class="modal-background" @click="showModal = false"></div>
@@ -36,11 +38,15 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/question'
+import store from '@/Store'
+
 export default {
     name: 'help',
     data () {
         return {
-            showModal: false
+            showModal: false,
+            sharedState: store
         }
     }
 }
@@ -50,21 +56,17 @@ export default {
 div {
     color: #000;
 }
-.icon-help {
-    font-size: 1.5em;
+.btn-help {
+    color: #ccc;
     position: absolute;
     right: 20px;
-    width: 30px;
-    height: 30px;
+    width: 31px;
+    height: 31px;
     border-radius: 50%;
-    text-align: center;
     border: 2px solid #ccc;
     background-color: #444;
 }
-.icon-help:before {
-    content: "\2754";
-}
-.icon-help:hover {
+.btn-help:hover {
     background-color: #666;
     border-color: #eee;
 }

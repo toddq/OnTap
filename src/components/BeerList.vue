@@ -9,7 +9,8 @@
     <nav class="nav">
         <div class="nav-left" v-if="sharedState.canEdit()">
             <button class="button is-success is-medium" role="button" @click="addBeer()">
-                <span class="icon-plus"></span>
+                <icon name="plus" class="icon"></icon>
+                <span>Add Beer</span>
             </button>
         </div>
     </nav>
@@ -22,6 +23,7 @@ import Beer from './Beer'
 import eventBus from '@/EventBus'
 import store from '@/Store'
 import {data} from '@/Data'
+import 'vue-awesome/icons/plus'
 
 export default {
     name: 'beer-list',
@@ -122,10 +124,7 @@ export default {
     background-color: transparent;
 }
 .nav .button {
-    margin-left: 15px;
-}
-.icon-plus:before {
-    content: "\2795";
+    margin-left: 10px;
 }
 .draggable {
     cursor: move;
