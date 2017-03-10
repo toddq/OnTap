@@ -15,8 +15,19 @@
                 play around with it, the data will be reset.
             </section>
             <section class="modal-card-body">
+            <ul>
+                <li>Lists stored in "the cloud" and updated in real-time</li>
+                <li>
+                    New lists can be created by changing the url fragment.  Try
+                    <div class="indent">
+                        <li><a href="#/demo">#/demo</a></li>
+                        <li><a href="#/foo">#/foo</a></li>
+                    </div>
+                </li>
+                <li>Toggle between view and edit mode with the button in the upper left corner.</li>
                 <li>Double-click on a beer item to edit or delete it.</li>
                 <li>Drag-and-drop beer items to change their displayed order.</li>
+                </ul>
                 <br><br>
             </section>
         </div>
@@ -49,5 +60,15 @@ export default {
 }
 .icon-help:before {
     content: "\2754";
+}
+ul {
+    list-style-type: square;
+    margin: 0 20px;
+}
+li {
+    margin: 5px 0;
+}
+.indent {
+    padding-left: 30px;
 }
 </style>
