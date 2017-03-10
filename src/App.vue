@@ -1,6 +1,7 @@
 <template>
     <div id='app'>
         <help></help>
+        <toggle-edit-mode></toggle-edit-mode>
         <router-view></router-view>
         <notifications></notifications>
     </div>
@@ -8,6 +9,7 @@
 
 <script>
 import Help from '@/components/Help'
+import ToggleEditMode from '@/components/ToggleEditMode'
 import Notifications from '@/components/Notifications'
 import { data } from '@/Data'
 import Firebase from 'firebase'
@@ -27,6 +29,7 @@ export default {
     name: 'app',
     components: {
         Help,
+        ToggleEditMode,
         Notifications
     }
 }

@@ -31,7 +31,6 @@ export default {
     },
     data () {
         return {
-            beers: [],
             sharedState: store
         }
     },
@@ -48,11 +47,13 @@ export default {
         eventBus.$on('beer-added', this.loadData)
         eventBus.$on('beer-deleted', this.onBeerDeleted)
         eventBus.$on('cancel-edit', this.onCancelEdit)
+        eventBus.$on('route-changed', this.loadData)
     },
     destroyed () {
         eventBus.$off('beer-added', this.loadData)
         eventBus.$off('beer-deleted', this.onBeerDeleted)
         eventBus.$off('cancel-edit', this.onCancelEdit)
+        eventBus.$off('route-changed', this.loadData)
     },
     methods: {
         loadData () {
@@ -83,7 +84,7 @@ export default {
             var hasChanged = false
             this.beers.forEach((beer, index) => {
                 // save the new index as an attribute on the beer
-                hasChanged = hasChanged || this._setOrder(beer, index)
+                hasChanged = this._setOrder(beer, index) || hasChanged
             })
 
             // workaround: once drag-n-drop sorting is used, vuefire loses the ability
@@ -94,6 +95,7 @@ export default {
             }
         },
         _setOrder (beer, sortOrder) {
+            console.log(beer.name, beer['sort-order'], '=>', sortOrder)
             if (beer['sort-order'] !== sortOrder) {
                 beer['sort-order'] = sortOrder
                 eventBus.$emit('save-beer', beer)
