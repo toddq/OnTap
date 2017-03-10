@@ -21,7 +21,7 @@ export default {
         toggleEditMode () {
             var path = this.$route.path.replace(/\/$/, '')
             if (this.sharedState.isEditMode()) {
-                path = path.replace(/\/edit$/, '')
+                path = path.replace(/edit$/, '')
             } else {
                 path += '/edit'
             }

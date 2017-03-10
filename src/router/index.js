@@ -7,12 +7,11 @@ Vue.use(Router)
 
 export default new Router({
     routes: [
-        { path: '/(edit)?', component: TapHouse },
+        { path: '/edit', component: TapHouse },
+        { path: '/:id/edit', component: TapHouse },
+        { path: '/:id/:subnode+/edit', component: TapHouse },
         { path: '/:id?', component: TapHouse },
-        { path: '/:id/(edit)?', component: TapHouse },
-        // TODO: sub-nodes of id
-        // { path: '/:id/:sub' },
-        // { path: '/:id/:sub/edit' },
+        { path: '/:id/:subnode+', component: TapHouse },
         {
             path: '/hello',
             name: 'Hello',

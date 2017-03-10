@@ -12,7 +12,6 @@
 import BeerList from './BeerList'
 import {data} from '@/Data'
 import store from '@/Store'
-import {includes} from 'lodash'
 
 export default {
     name: 'taphouse',
@@ -20,23 +19,28 @@ export default {
         'beer-list': BeerList
     },
     created () {
-        console.log('initializing TapHouse')
+        console.log('initializing TapHouse', this.$route)
         this.setRouteId(this.$route)
         this.setEditMode(this.$route)
     },
     watch: {
         '$route' (to, from) {
-            console.log('route has changed from', from.params, 'to', to.params)
+            console.log('route has changed from', from, 'to', to)
             this.setRouteId(to)
             this.setEditMode(to)
         }
     },
     methods: {
+        // route id will become relevent when auth is introduced
         setRouteId (route) {
-            data.setRoute(route.params.id)
+            var path = route.params.id
+            if (path && route.params.subnode) {
+                path += '/' + route.params.subnode
+            }
+            data.setRoute(path)
         },
         setEditMode (route) {
-            var editMode = includes(route.params, 'edit')
+            var editMode = route.path.endsWith('/edit')
             store.isEditMode(editMode)
         }
     }
