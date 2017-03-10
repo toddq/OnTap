@@ -1,14 +1,23 @@
 <template>
 <div>
     <button class="button" @click="toggleEditMode" :class="{'is-warning': sharedState.isEditMode()}">
-        <span v-if="sharedState.isEditMode()">EditMode</span>
-        <span v-else>View Mode</span>
+
+        <span v-if="sharedState.isEditMode()">
+            <icon name="pencil" class="icon"></icon>
+            <span>Editing</span>
+        </span>
+        <span v-else>
+            <icon name="eye" class="icon"></icon>
+            <!-- <span>View Mode</span> -->
+        </span>
     </button>
 </div>
 </template>
 
 <script>
 import store from '@/Store'
+import 'vue-awesome/icons/eye'
+import 'vue-awesome/icons/pencil'
 
 export default {
     name: 'toggle-edit-mode',

@@ -4,8 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import VueFire from 'vuefire'
 import router from './router'
+import Icon from 'vue-awesome/components/Icon.vue'
 
 Vue.use(VueFire)
+Vue.component('icon', Icon)
 
 Vue.config.productionTip = false
 
