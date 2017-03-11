@@ -49,11 +49,15 @@
                 </div>
             </div>
 
-            <div class="control is-horizontal">
+            <div class="control is-horizontal" v-show="false">
                 <input type="text" class="input" v-model="editedBeer.ibu" placeholder="IBUs">
                 <div class="control-label">
                     <label class="label has-text-left">IBUs</label>
                 </div>
+            </div>
+
+            <div>
+                 <hop-rating :value="editedBeer.hops" @change="editedBeer.hops = arguments[0]"></hop-rating>
             </div>
 
         </div>
@@ -67,8 +71,13 @@
 </template>
 
 <script>
+import HopRating from './HopRating'
+
 export default {
     name: 'beer-edit',
+    components: {
+        HopRating
+    },
     props: ['beer'],
     data () {
         return {
