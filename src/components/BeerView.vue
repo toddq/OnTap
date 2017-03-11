@@ -7,13 +7,24 @@
         <div class="beer-style">{{ beer.style }}</div>
         <div class="beer-description">{{ beer.description }}</div>
     </div>
-    <div class="column is-3">{{ beer.abv }}% abv<br>{{ beer.ibu }} IBU</div>
+    <div class="column is-3">
+        <div>{{ beer.abv }}% abv</div>
+        <div v-show="false">{{ beer.ibu }} IBU</div>
+        <div>
+             <hop-rating :value="beer.hops" :disabled="true" v-if="beer.hops"></hop-rating>
+        </div>
+    </div>
 </div>
 </template>
 
 <script>
+import HopRating from './HopRating'
+
 export default {
     name: 'beer-view',
+    components: {
+        HopRating
+    },
     props: ['beer'],
     computed: {
         srm () {
