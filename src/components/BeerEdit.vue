@@ -3,7 +3,11 @@
     <div class="columns is-gapless">
         <div class="column is-2">
             <div class="control">
-                <input type="text" class="input" v-model="editedBeer.srm" placeholder="Color (SRM)">
+                <input type="text" class="input" v-show="false" v-model.number="editedBeer.srm" placeholder="Color (SRM)">
+                <div class="color-swatch"
+            </div>
+            <div>
+                <srm-picker :srm="editedBeer.srm" :show-swatch="true" @change-color="onColorChange"></srm-picker>
             </div>
             <div class="control">
                 <input type="text" class="input" v-model="editedBeer.glass" placeholder="Glass">
@@ -43,14 +47,14 @@
         <div class="column is-3 abv-ibu">
 
             <div class="control is-horizontal">
-                <input type="text" class="input" v-model="editedBeer.abv" placeholder="ABV">
+                <input type="text" class="input" v-model.number="editedBeer.abv" placeholder="ABV">
                 <div class="control-label">
                     <label class="label has-text-left">% abv</label>
                 </div>
             </div>
 
             <div class="control is-horizontal" v-show="false">
-                <input type="text" class="input" v-model="editedBeer.ibu" placeholder="IBUs">
+                <input type="text" class="input" v-model.number="editedBeer.ibu" placeholder="IBUs">
                 <div class="control-label">
                     <label class="label has-text-left">IBUs</label>
                 </div>
@@ -71,11 +75,13 @@
 </template>
 
 <script>
+import SrmPicker from './SrmPicker'
 import HopRating from './HopRating'
 
 export default {
     name: 'beer-edit',
     components: {
+        SrmPicker,
         HopRating
     },
     props: ['beer'],
@@ -93,6 +99,9 @@ export default {
         this.$refs.name.focus()
     },
     methods: {
+        onColorChange (newColor) {
+            this.editedBeer.srm = newColor.srm
+        },
         onSave () {
             console.log('saving', this.beer)
             // copy changes back
