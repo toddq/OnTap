@@ -20,7 +20,8 @@
                     <label class="label has-text-left">Name</label>
                 </div>
                 <div class="control is-expanded">
-                    <input class="input" type="text" ref="name" v-model="editedBeer.name" placeholder="Beer name">
+                    <input class="input" type="text" ref="name" placeholder="Beer name"
+                           v-model="editedBeer.name" @blur="validateName" :class="{'invalid': nameInvalid}">
                 </div>
             </div>
 
@@ -87,7 +88,8 @@ export default {
     props: ['beer'],
     data () {
         return {
-            editedBeer: {}
+            editedBeer: {},
+            nameInvalid: false
         }
     },
     created () {
@@ -102,11 +104,22 @@ export default {
         onColorChange (newColor) {
             this.editedBeer.srm = newColor.srm
         },
+        validate () {
+            if (this.nameInvalid) {
+                this.$refs.name.focus()
+                return false
+            }
+            return true
+        },
+        validateName () {
+            this.nameInvalid = !(this.editedBeer.name && this.editedBeer.name.length)
+        },
         onSave () {
-            console.log('saving', this.beer)
-            // copy changes back
-            Object.assign(this.beer, this.editedBeer)
-            this.$emit('save')
+            if (this.validate()) {
+                // copy changes back
+                Object.assign(this.beer, this.editedBeer)
+                this.$emit('save')
+            }
         },
         onCancel () {
             console.log('cancel edit of', this.beer)
@@ -146,6 +159,9 @@ export default {
     }
     .input:focus, .input.is-focused, .input:active, .input.is-active {
         border: 2px solid #23d160;
+    }
+    .input.invalid {
+        border: 2px solid #ff3860;
     }
 }
 .column.abv-ibu {
