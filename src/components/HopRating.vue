@@ -57,7 +57,8 @@ export default {
         height: 25px;
         background-size: contain;
         background-repeat: no-repeat;
-        background-image: url('../assets/hop_white_empty.svg');
+        // TODO
+        // background-image: url('../assets/hop_white_empty.svg');
 
         &:hover {
             cursor: pointer;
@@ -66,7 +67,8 @@ export default {
         &.is-selected {
             width: 23px;
             height: 30px;
-            background-image: url('../assets/hop_green.svg');
+            // TODO
+            // background-image: url('../assets/hop_green.svg');
         }
     }
 

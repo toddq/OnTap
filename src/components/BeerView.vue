@@ -2,12 +2,13 @@
 <div class="columns is-gapless">
     <!-- these will eventually be their own sub-components -->
     <div class="column is-2">
-        <div>
+        <div style="display: inline-block">
+            <glass :glass="beer.glass"></glass>
+            <!-- {{ glass }} -->
+        </div>
+        <div style="display: inline-block; vertical-align: bottom">
             <srm :srm="beer.srm" :show-swatch="true" :disabled="true" v-show="beer.srm" style="display: inline-block;"></srm>
             {{ srm }}
-        </div>
-        <div>
-            {{ glass }}
         </div>
     </div>
     <div class="column">
@@ -27,12 +28,14 @@
 
 <script>
 import Srm from './SrmPicker'
+import Glass from './GlassPicker'
 import HopRating from './HopRating'
 
 export default {
     name: 'beer-view',
     components: {
         Srm,
+        Glass,
         HopRating
     },
     props: ['beer'],

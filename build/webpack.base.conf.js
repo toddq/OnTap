@@ -2,6 +2,10 @@ var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
+// var SvgStore = require('webpack-svgstore-plugin')
+
+// var svg  = { path: './assets/*.svg', name: 'assets/svg/[hash].logos.svg' }
+// require('webpack-svgstore-plugin/src/helpers/svgxhr')(svg)
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -47,13 +51,31 @@ module.exports = {
         include: [resolve('src'), resolve('test')]
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        // |svg
+        test: /\.(png|jpe?g|gif)(\?.*)?$/,
         loader: 'url-loader',
         query: {
           limit: 10000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },
+      // {
+      //   test: /\.svg$/,
+      //   loader: 'vue-svg-loader'
+      // },
+      {
+        test: /\.svg$/,
+        loader: 'svg-sprite-loader?' + JSON.stringify({
+          // name: 'icon-[1]',
+          name: '[name]_[hash]',
+          prefixize: true,
+          // regExp: utils.assetsPath('(.*)\\.svg')
+        })
+      },
+      // {
+      //   test: /\.svg$/i,
+      //   loader: 'inline'
+      // },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
@@ -63,5 +85,17 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  // plugins: [
+  //   // create svgStore instance object
+  //   new SvgStore({
+  //     // svgo options
+  //     svgoOptions: {
+  //       plugins: [
+  //         { removeTitle: true }
+  //       ]
+  //     },
+  //     prefix: 'icon'
+  //   })
+  // ]
 }
