@@ -3,11 +3,12 @@
     <!-- these will eventually be their own sub-components -->
     <div class="column is-2">
         <div>
-            <srm :srm="beer.srm" :show-swatch="true" :disabled="true" v-show="beer.srm" style="display: inline-block;"></srm>
-            {{ srm }}
+            <srm :srm="beer.srm" :show-swatch="true" :disabled="true" v-show="beer.srm"></srm>
+            <!-- {{ srm }} -->
         </div>
         <div>
-            {{ glass }}
+            <glass-picker :glass="beer.glass"></glass-picker>
+            <!-- {{ glass }} -->
         </div>
     </div>
     <div class="column">
@@ -27,21 +28,20 @@
 
 <script>
 import Srm from './SrmPicker'
+import GlassPicker from './GlassPicker'
 import HopRating from './HopRating'
 
 export default {
     name: 'beer-view',
     components: {
         Srm,
+        GlassPicker,
         HopRating
     },
     props: ['beer'],
     computed: {
         srm () {
             return this.beer.srm && `${this.beer.srm} SRM`
-        },
-        glass () {
-            return this.beer.glass && `${this.beer.glass} glass`
         }
     }
 }
@@ -58,5 +58,8 @@ export default {
 }
 .beer-style {
     font-style: italic;
+}
+.column:first-child  div {
+    display: inline-block;
 }
 </style>

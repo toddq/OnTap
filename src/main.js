@@ -6,6 +6,11 @@ import VueFire from 'vuefire'
 import router from './router'
 import Icon from 'vue-awesome/components/Icon.vue'
 
+// render a svg sprite containing all icons
+// this should be its own component
+// const files = require.context('!svg-sprite-loader!./assets/svg', true, /.*\.svg$/)
+// files.keys().forEach(files)
+
 Vue.use(VueFire)
 Vue.component('icon', Icon)
 

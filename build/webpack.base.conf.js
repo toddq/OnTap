@@ -47,7 +47,8 @@ module.exports = {
         include: [resolve('src'), resolve('test')]
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        // |svg
+        test: /\.(png|jpe?g|gif)(\?.*)?$/,
         loader: 'url-loader',
         query: {
           limit: 10000,
@@ -61,6 +62,14 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.svg$/,
+        // loader: 'svg-sprite-loader'
+        loader: 'svg-sprite?' + JSON.stringify({
+          name: '[name]_[hash]',
+          prefixize: true
+        })
       }
     ]
   }
