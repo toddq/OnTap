@@ -39,6 +39,19 @@ create_docker_container:
   only:
     - master
 
+deploy_to_pages:
+  stage: deploy
+  script:
+  - mkdir .public
+  - cp -r * .public
+  - mv .public public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+
+
 deploy_to_production:
   stage: deploy
   tags:
