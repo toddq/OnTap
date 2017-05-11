@@ -7,7 +7,7 @@
             <!-- {{ srm }} -->
         </div>
         <div>
-            <glass-picker :glass="beer.glass"></glass-picker>
+            <glass-picker :glass="beer.glass" :srm="beer.srm"></glass-picker>
             <!-- {{ glass }} -->
         </div>
     </div>

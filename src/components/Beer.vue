@@ -36,6 +36,9 @@ export default {
                 }
             }
         },
+        foo () {
+            return ''
+        },
         cancelEdit () {
             console.log(`cancel edit beer '${this.beer.name}'`)
             this._setEditState(false)
