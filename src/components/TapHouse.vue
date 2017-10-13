@@ -2,7 +2,7 @@
 <div class="taphouse">
     <div class="header">
         <div class="logo-background">
-            <img src="/static/favicon.png" class="logo">
+            <img src="../../static/favicon.png" class="logo">
         </div>
         <span class="title">Beers on tap</span>
     </div>

@@ -39,7 +39,7 @@ create_docker_container:
   only:
     - master
 
-deploy_to_pages:
+.deploy_to_pages:
   stage: deploy
   script:
   - mkdir .public
@@ -51,8 +51,8 @@ deploy_to_pages:
   only:
   - master
 
-
-deploy_to_production:
+# deployment's moving
+.deploy_to_production:
   stage: deploy
   tags:
     - production
