@@ -12,7 +12,7 @@ Like many others, this was originally inspired by [Kegerface](http://github.com/
  - If I ever get this project finished, I'd like it to be easily available to anyone to be able to run their own instance without a web server, ie just open the index file off their desktop.
 
 #### Basic usage
-Data is namespaced to the url.  By default `#/demo` data is loaded.  The idea was to be able host multiple lists from an instance, such as `#/mybrewery`, `#/mybrewery/bottles`, or even `#/myhomebrewclub`, `#/myhomebrewclub/brewer`, `#/myhomebrewclub/brewer2`. 
+Data is namespaced to the url.  By default `#/demo` data is loaded.  The idea was to be able host multiple lists from an instance, such as `#/mybrewery`, `#/mybrewery/bottles`, or even `#/myhomebrewclub`, `#/myhomebrewclub/brewer`, `#/myhomebrewclub/brewer2`.
 
 By default the display view is shown.  To enter edit mode, double-click the brewery title area, or append `/edit` to the url.  In edit mode, click `+` to add a new beer, or double-click an existing one to edit or delete it.  The list can be re-ordered by simply dragging and dropping.  Double-click the brewery title again to exit edit mode.
 
@@ -23,11 +23,19 @@ I actually haven't worked on this for quite some time, as I'm better at starting
 
 One of the major challenges to this project (besides that Angular is not my top framework choice) has been my desire for it to work without a webserver.  Due to some of the requirements by Angular, this limits the ability to break the app up into more separate files and has created a messier project than I'd like.
 
+<a href="https://imgur.com/JemXukW.png">
+  <img src="https://imgur.com/JemXukW.png">
+</a>
+
+<a href="https://imgur.com/PEDSFo2.png">
+  <img src="https://imgur.com/PEDSFo2.png">
+</a>
+
 ##### TODO
 There are several things left to do before I'll consider this complete.
 
 - Edit mode
- - Color picker - A popup color picker with beer srm values 
+ - Color picker - A popup color picker with beer srm values
  - Glass/bottle picker - A popup picker to choose between a couple different glass styles, but also icons for bottles and carboys, to be able to have lists of things clearly in bottles or on deck.
  - Upload custom brewery logo.
 
@@ -41,7 +49,7 @@ There are several things left to do before I'll consider this complete.
 - Bigger Picture
  - Reconsider requirement to run without a webserver.  Would be easier to maintain if it was more modular.
  - Consider porting it from Angular to something else.
- - Clean up the project structure.  It's a mess.  
+ - Clean up the project structure.  It's a mess.
   - Use a dependency manager (bower or something).
   - Separate my code from 3rd party code.
   - Remove unneeded stuff (spinner, etc)
