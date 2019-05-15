@@ -2,10 +2,6 @@
 
 > Digital taplist using Vue.js and Firebase.
 
-[![build status](https://git.microfocus.com/ToddQu/ontap/badges/master/build.svg)](https://git.microfocus.com/ToddQu/ontap/commits/master)
-
-View at: [http://ontap.attachmate.com]()
-
 Like many others, this was originally inspired by [Kegerface](http://github.com/kegerface/kegerface).  I looked at [RaspberryPints](https://github.com/RaspberryPints/RaspberryPints), and while I think they have a great project, I had 2 goals that didn't quite align.
 
 1. Super fast and simple entry updating.
@@ -18,11 +14,19 @@ Like many others, this was originally inspired by [Kegerface](http://github.com/
 
 
 ## Basic usage
-Data is namespaced to the url.  The idea was to be able host multiple lists from an instance, such as `#/mybrewery`, `#/mybrewery/bottles`, or even `#/myhomebrewclub`, `#/myhomebrewclub/brewer`, `#/myhomebrewclub/brewer2`. 
+Data is namespaced to the url.  The idea was to be able host multiple lists from an instance, such as `#/mybrewery`, `#/mybrewery/bottles`, or even `#/myhomebrewclub`, `#/myhomebrewclub/brewer`, `#/myhomebrewclub/brewer2`.
 
 By default the display view is shown.  To enter edit mode, double-click the brewery title area (there's currently a temporary toggle button), or append `/edit` to the url.  In edit mode, click `+` to add a new beer, or double-click an existing one to edit or delete it.  The list can be re-ordered by simply dragging and dropping.
 
 To start a new list, just enter a new url, such as `#/foo`.
+
+<a href="https://imgur.com/dgijGqn.png">
+  <img src="https://imgur.com/dgijGqn.png">
+</a>
+
+<a href="https://imgur.com/fh2uwMe.png">
+  <img src="https://imgur.com/fh2uwMe.png">
+</a>
 
 ## Development
 
@@ -41,17 +45,14 @@ npm run build
 
 There's a `Dockerfile` in the root directory that you can use to build either a development or "production" server environment.
 
-A Docker image containing the latest code is also in this project's container registry.  Domain authentication is necessary.
-
 ``` bash
-docker login docker.microfocus.com
-docker pull docker.microfocus.com/toddqu/ontap
+docker build -t ontap .
 
 # dev mode server
-docker run -it --rm -p 8080:8080 docker.microfocus.com/toddqu/ontap
+docker run -it --rm -p 8080:8080 ontap
 
 # production mode server
-docker run -d --name ontap -p 80:8080 docker.microfocus.com/toddqu/ontap npm start
+docker run -d --name ontap -p 80:8080 ontap npm start
 
 ```
 
